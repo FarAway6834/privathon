@@ -1,9 +1,30 @@
+from martialaw import martialaw as __clsr__
 import builtins as __builtin__
 
 """
 # privathon.py
 
 private scoped python
+
+## DEPENDENCY
+
+1. 1 modules
+2. 1 module::functions
+3. 0 module::all_functions
+
+### 1 modules
+
+ - builtins as __builtin__
+ - end
+
+### 1 module::functions
+
+ - martialaw::martialaw as __clsr__
+ - end
+
+### 0 module::all_functions
+
+ - end
 
 ## RESOURCES
 
@@ -52,7 +73,7 @@ private scoped python
 
 #### 4 builtin scope
 
- - __on_builtin_scope__ = lambda name : lambda value : setattr(__builtin__, name, value)
+ - __on_builtin_scope__ = __clsr__(lambda name, value : setattr(__builtin__, name, value))
 
 ````markdown
 # @__on_builtin_scope_(name : str) decorator
@@ -147,7 +168,7 @@ class AmamiyaGoro:
 - fin -
 ````
 
- - getter_and_setter = lambda getter : lambda setter : property(fget = getter, fset = setter)
+ - getter_and_setter = __clsr__(lambda getter, setter : property(fget = getter, fset = setter))
 
 ````markdown
 # @getter_and_setter decorator
@@ -238,13 +259,15 @@ def example(self, value):
 
 """
 
-__builtin__.__on_builtin_scope__ = lambda name : lambda value : setattr(__builtin__, name, value)
+@__clsr__
+__builtin__.__on_builtin_scope__ = lambda name, value : setattr(__builtin__, name, value)
 
 @__on_builtin_scope__("__builtin_scope__")
 __builtin_scope__ = lambda named_obj : __on_builtin_scope__(named_obj.__name__, named_obj)
 
 @__on_builtin_scope__("getter_and_setter")
-getter_and_setter = lambda getter : lambda setter : property(fget = getter, fset = setter)
+@__clsr__
+getter_and_setter = lambda getter, setter : property(fget = getter, fset = setter)
 
 @__builtin_scope__
 class ConstantError(Exception):
