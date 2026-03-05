@@ -7,19 +7,27 @@ private scoped python
 
 ## RESOURCES
 
-1. 0 CONSTANTS
-2. 1 LAMBDAS
-3. FUNCTIONS
-4. CLASSES
+1. 1 CONSTANTS
+2. 3 LAMBDAS
+3. 0 FUNCTIONS
+4. 1 CLASSES
 
-### 0 CONSTANTS
+### 1 CONSTANTS
 
-1. 0 builtin scope
+1. 1 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 0 builtin scope
+#### 1 builtin scope
+
+ - constant_err = ConstantError("const is immutable")
+
+ ```markdown
+ # constant_err
+
+ writing...
+ ```
 
  - end
 
@@ -172,7 +180,7 @@ def example(self, value):
 
  - end
 
-### FUCNTIONS
+### 0 FUCNTIONS
 
 1. 0 builtin scope
 2. 0 public scope
@@ -195,7 +203,7 @@ def example(self, value):
 
  - end
 
-### CLASSES
+### 1 CLASSES
 
 1. 1 builtin scope
 2. 0 public scope
@@ -204,7 +212,7 @@ def example(self, value):
 
 #### 0 builtin scope
 
- - ConstantImmutablityFaultError(constant is immutable"
+ - ConstantError
  - end
 
 #### 0 public scope
@@ -226,5 +234,20 @@ __builtin__.__on_builtin_scope__ = lambda name : lambda value : setattr(__builti
 @__on_builtin_scope__("__builtin_scope__")
 __builtin_scope__ = lambda named_obj : __on_builtin_scope__(named_obj.__name__, named_obj)
 
-@__builtin_scope__
+@__on_builtin_scope__("getter_and_setter")
 getter_and_setter = lambda getter : lambda setter : property(fget = getter, fset = setter)
+
+@__builtin_scope__
+class ConstantError(Exception):
+    """
+    # error ConstantError
+
+    writing...
+
+     - fin -
+    """
+     
+    pass
+
+@__on_builtin_scope__("constant_err")
+constant_err = ConstantError("const is immutable")
