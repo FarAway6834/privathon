@@ -8,8 +8,8 @@ private scoped python
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 3 LAMBDAS
-3. 0 FUNCTIONS
+2. 4 LAMBDAS
+3. 1 FUNCTIONS
 4. 1 CLASSES
 
 ### 1 CONSTANTS
@@ -43,14 +43,14 @@ private scoped python
 
  - end
 
-### LAMBDAS
+### 4 LAMBDAS
 
-1. 3 builtin scope
+1. 4 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 3 builtin scope
+#### 4 builtin scope
 
  - __on_builtin_scope__ = lambda name : lambda value : setattr(__builtin__, name, value)
 
@@ -165,6 +165,14 @@ def example(self, value):
 ```
 
 ````
+
+ - const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
+
+````markdown
+# @const decorator
+
+ - fin -
+````
  
  - end
 
@@ -180,15 +188,16 @@ def example(self, value):
 
  - end
 
-### 0 FUCNTIONS
+### 1 FUCNTIONS
 
-1. 0 builtin scope
+1. 1 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
 #### 0 builtin scope
 
+ - raise_constant_err
  - end
 
 #### 0 public scope
@@ -251,3 +260,17 @@ class ConstantError(Exception):
 
 @__on_builtin_scope__("constant_err")
 constant_err = ConstantError("const is immutable")
+
+@__builtin_scope__
+def raise_constant_err():
+    """
+    # function raise_constant_err()
+
+    writing...
+
+     - fin -
+    """
+    raise constant_err
+
+@__on_builtin_scope__("const")
+const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
