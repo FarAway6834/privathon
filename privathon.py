@@ -1,5 +1,7 @@
 from types import SimpleNamespace as namespace
-from martialaw import martialaw as __clsr__
+from martialaw.martialaw import martialaw as __clsr__
+fron martialaw.martialaw import partial as __partial__
+from functools import wraps as __smart_deco_wraps__
 import builtins as __builtin__
 
 """
@@ -11,7 +13,7 @@ private scoped python
 
 1. 1 modules
 2. 2 module::functions / module::classes
-3. 0 module::all_functions / 
+3. 0 module::all_resource
 
 ### 1 modules
 
@@ -20,18 +22,20 @@ private scoped python
 
 ### 1 module::functions / module::classes
 
- - martialaw::martialaw as __clsr__
+ - martialaw.martialaw::martialaw as __clsr__
+ - martialaw.martialaw::partial as __partial__
+ - functools::wraps as __smart_deco_wraps__
  - types::SimpleNamespace as namespace
  - end
 
-### 0 module::all_functions
+### 0 module::all_resource
 
  - end
 
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 4 LAMBDAS
+2. 6 LAMBDAS
 3. 2 FUNCTIONS
 4. 1 CLASSES
 
@@ -196,8 +200,38 @@ def example(self, value):
 
  - fin -
 ````
- - sealed_const = lambda value : const(lambda self : value)
- 
+ - sealed_value = lambda value : const(lambda self : value)
+
+````markdown
+# function sealed_value
+
+ - fin -
+````
+
+ - static = __clsr__(lambda __static__, func : __smart_deco_wraps__(__partial__(func, __static__ = __static__)))
+
+````markdown
+# @static(__static__) decorator
+
+ - fin -
+````
+
+ - call_constant_functor = lambda f : f()
+
+````markdown
+# function call_constant_functor
+
+ - fin -
+````
+
+ - static_decocls = lambda cls : static(call_constant_functor(cls))
+
+````markdown
+# decorator static_decocls
+
+ - fin -
+````
+
  - end
 
 #### 0 public scope
@@ -222,7 +256,7 @@ def example(self, value):
 #### 0 builtin scope
 
  - raise_constant_err
- - sealed_var
+ - sealed_value
  - end
 
 #### 0 public scope
@@ -269,6 +303,9 @@ __builtin__.__set_builtin_scope__ = lambda name, value : setattr(__builtin__, na
 @__set_builtin_scope__("__builtin_scope__")
 __on_builtin_scope__ = lambda named_obj : __set_builtin_scope__(named_obj.__name__, named_obj)
 
+@__set_builtin_scope__("call_constant_functor")
+call_constant_functor = lambda f : f()
+
 @__on_builtin_scope__("getter_and_setter")
 @__clsr__
 getter_and_setter = lambda getter, setter : property(fget = getter, fset = setter)
@@ -299,17 +336,24 @@ def raise_constant_err():
     """
     raise constant_err
 
-@__on_builtin_scope__("const")
+@__set_builtin_scope__("const")
 const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
 
-@__builtin_scope__
-def sealed_var(var):
+@__on_builtin_scope__
+def sealed_value(var):
     @getter_and_setter(lambda self : var)
     def ret(self, value):
         nonlocal var
         var = value
     return ret
 
-@__on_builtin_scope__("sealed_const")
-sealed_const = lambda value : const(lambda self : value)
+@__set_builtin_scope__("sealed_const")
+sealed_value = lambda value : const(lambda self : value)
+
+@__set_builtin_scope__("static")
+@__clsr__
+static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __static__ = __static__))
+
+@__set_builtin_scope__("static_decocls")
+static_decocls = lambda cls : static(call_constant_functor(cls))
 
