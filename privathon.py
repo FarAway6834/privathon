@@ -39,7 +39,7 @@ private scoped python
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 6 LAMBDAS
+2. 7 LAMBDAS
 3. 2 FUNCTIONS
 4. 2 CLASSES
 
@@ -232,6 +232,14 @@ def example(self, value):
 
 ````markdown
 # decorator static_decocls
+
+ - fin -
+````
+
+ - salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
+
+````markdown
+# function salt
 
  - fin -
 ````
