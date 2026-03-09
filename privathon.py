@@ -32,7 +32,7 @@ private scoped python
 
 1. 1 CONSTANTS
 2. 4 LAMBDAS
-3. 1 FUNCTIONS
+3. 2 FUNCTIONS
 4. 1 CLASSES
 
 ### 1 CONSTANTS
@@ -196,6 +196,7 @@ def example(self, value):
 
  - fin -
 ````
+ - sealed_const = lambda value : const(lambda self : value)
  
  - end
 
@@ -211,9 +212,9 @@ def example(self, value):
 
  - end
 
-### 1 FUCNTIONS
+### 2 FUCNTIONS
 
-1. 1 builtin scope
+1. 2 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
@@ -221,6 +222,7 @@ def example(self, value):
 #### 0 builtin scope
 
  - raise_constant_err
+ - sealed_var
  - end
 
 #### 0 public scope
@@ -300,11 +302,14 @@ def raise_constant_err():
 @__on_builtin_scope__("const")
 const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
 
-def static(var):
+@__builtin_scope__
+def sealed_var(var):
     @getter_and_setter(lambda self : var)
     def ret(self, value):
         nonlocal var
         var = value
     return ret
 
-forgetedname1 = lambda value : const(lambda self : value)
+@__on_builtin_scope__("sealed_const")
+sealed_const = lambda value : const(lambda self : value)
+
