@@ -1,3 +1,5 @@
+from time import time as __unix_time__
+from random import random as __random_of_unit_interval__
 from types import SimpleNamespace as namespace
 from martialaw.martialaw import martialaw as __clsr__
 fron martialaw.martialaw import partial as __partial__
@@ -12,7 +14,7 @@ private scoped python
 ## DEPENDENCY
 
 1. 1 modules
-2. 2 module::functions / module::classes
+2. 6 module::functions / module::classes
 3. 0 module::all_resource
 
 ### 1 modules
@@ -26,6 +28,8 @@ private scoped python
  - martialaw.martialaw::partial as __partial__
  - functools::wraps as __smart_deco_wraps__
  - types::SimpleNamespace as namespace
+ - time::time as __unix_time__
+ - random::random as __random_of_unit_interval__
  - end
 
 ### 0 module::all_resource
@@ -358,6 +362,7 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
 @__set_builtin_scope__("static_decocls")
 static_decocls = lambda cls : static(call_constant_functor(cls))
 
+@__on_builtin_scope__
 class private(type):
     def __new__(metacls, name, *argv):
         L = len(argv)
@@ -382,3 +387,6 @@ class private(type):
                     return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
            return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
         else: return name.private
+
+@__set_builtin_scope__("salt")
+salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
