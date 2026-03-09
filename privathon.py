@@ -37,7 +37,7 @@ private scoped python
 1. 1 CONSTANTS
 2. 6 LAMBDAS
 3. 2 FUNCTIONS
-4. 1 CLASSES
+4. 2 CLASSES
 
 ### 1 CONSTANTS
 
@@ -271,9 +271,9 @@ def example(self, value):
 
  - end
 
-### 1 CLASSES
+### 2 CLASSES
 
-1. 1 builtin scope
+1. 2 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
@@ -281,6 +281,7 @@ def example(self, value):
 #### 0 builtin scope
 
  - ConstantError
+ - private
  - end
 
 #### 0 public scope
@@ -357,3 +358,27 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
 @__set_builtin_scope__("static_decocls")
 static_decocls = lambda cls : static(call_constant_functor(cls))
 
+class private(type):
+    def __new__(metacls, name, *argv):
+        L = len(argv)
+        assert L * L == L + L, f"private get 1 or 3 arguments but {L} given"
+        
+        if L:
+            __dict__ = argv[1]
+            @const
+            def private(self, private_wraps = {}):
+                selfid = id(self)
+                if selfid in private_wraps: return private_wraps[selfid]
+                else:
+                    this = self
+                    __private__ = __dict__["private"]()
+                    @const
+                    def private(self):
+                        del self
+                        return this
+                    def __del__(self):
+                        __dict__["__del__"](self)
+                        del private_wraps[selfid]
+                    return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
+           return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
+        else: return name.private
