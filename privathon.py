@@ -2,7 +2,7 @@ from time import time as __unix_time__
 from random import random as __random_of_unit_interval__
 from types import SimpleNamespace as namespace
 from martialaw.martialaw import martialaw as __clsr__
-fron martialaw.martialaw import partial as __partial__
+from martialaw.martialaw import partial as __partial__
 from functools import wraps as __smart_deco_wraps__
 import builtins as __builtin__
 
